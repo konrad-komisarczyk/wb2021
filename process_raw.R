@@ -53,9 +53,29 @@ process_antonius <- function(filename) {
     mutate(outcome = ifelse(outcome == "Alive", 0, 1))
     write.csv(file = str_c("data/", filename, ".csv"), row.names = F)
 }
-  
 
+process_outcomerea <- function(filename) {
+  readxl::read_xlsx(str_c("raw_data/", filename, ".xlsx"), na = ".") %>%
+    rename(
+      admission = date_hospital_admi,
+      discharge = date_hospital_end,
+      outcome = Death_D28
+    ) %>%
+    rowwise() %>%
+    mutate(
+      LDH_first = first(na.omit(c_across(starts_with("ldh")))),
+      LDH_last = last(na.omit(c_across(starts_with("ldh")))),
+      hsCRP_first = first(na.omit(c_across(starts_with("crp")))),
+      hsCRP_last = last(na.omit(c_across(starts_with("crp")))),
+      lymphocytes_first = first(na.omit(c_across(starts_with("L_pourc")))),
+      lymphocytes_last = last(na.omit(c_across(starts_with("L_pourc")))),
+    ) %>%
+    select(id, admission, discharge, outcome, 
+           LDH_first, LDH_last, hsCRP_first, hsCRP_last, lymphocytes_first, lymphocytes_last) %>%
+    write.csv(file = str_c("data/", filename, ".csv"), row.names = F, quote = F)
+}
 
 process_tongji("Tongji_375_CN")
 process_tongji("Tongji_110_CN")
 process_antonius("St_Antonius_NL")
+process_outcomerea("Outcomerea_FR")
