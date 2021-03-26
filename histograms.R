@@ -7,13 +7,12 @@ df = data.frame(read.csv(str_c("data/", filename, ".csv")))
 ldh_min = 150
 ldh_max = 1000
 hist_scale_factor = 300
-
-df1 <- df %>% mutate(died = case_when(
-  outcome == 0 ~ "died",
-  outcome == 1 ~ "survived"
-))
 title = sprintf('Plot of %s in %s',which_LDH, filename)
-ggplot(data = df1, aes_string(x = which_LDH, fill = "died")) + geom_histogram(binwidth=30, alpha=0.3) +
+
+df %>% mutate(died = case_when(
+  outcome == 1 ~ "died",
+  outcome == 0 ~ "survived"
+)) %>% ggplot(aes_string(x = which_LDH, fill = "died")) + geom_histogram(binwidth=30, alpha=0.3) +
   scale_fill_manual(name='Outcome', labels=c("Died", "Survived"), values=c('blue', 'orange')) + xlim(ldh_min,ldh_max) + 
   scale_y_continuous(name = "Number of patients") +
   ggtitle(title) +
