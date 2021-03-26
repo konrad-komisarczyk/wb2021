@@ -23,5 +23,14 @@ process_tongji <- function(filename) {
     write.csv(file=str_c("data/", filename, ".csv"), row.names = F)
 }
 
+st_antonius_types = c("numeric", "text", "date", "date", "date",
+                      "text", "text", "date", "numeric", "date",
+                      "numeric", "numeric", "numeric", "numeric", "numeric")
+
+suppressWarnings( # expected warnings, caused by disgusting non-date strings in date columns
+  readxl::read_xlsx("raw_data/St_Antonius_NL.xlsx", col_types = st_antonius_types)
+  )
+
+
 process_tongji("Tongji_375_CN")
 process_tongji("Tongji_110_CN")
