@@ -20,7 +20,7 @@ process_tongji <- function(filename) {
       lymphocytes_first = first(na.omit(lymphocytes)),
       lymphocytes_last = last(na.omit(lymphocytes)),
     ) %>%
-    write.csv(file=str_c("data/", filename, ".csv"))
+    write.csv(file=str_c("data/", filename, ".csv"), row.names = F)
 }
 
 process_tongji("Tongji_375_CN")
