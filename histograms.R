@@ -16,8 +16,8 @@ draw_histogram <- function(filename, which_LDH){
         outcome == 1 ~ "died",
         outcome == 0 ~ "survived"
     )) %>% 
-    ggplot(aes_string(x = which_LDH, fill = "died")) + 
-    geom_histogram(binwidth=100, alpha=0.3) +
+    ggplot() + 
+    geom_histogram(aes_string(x = which_LDH, fill = "died"), binwidth=100, alpha=0.3) +
     scale_fill_manual(name='Outcome', labels=c("Died", "Survived"), values=c('blue', 'orange')) + 
     xlim(ldh_min, ldh_max) + 
     scale_y_continuous(name = "Number of patients") +
