@@ -1,3 +1,5 @@
+# Requires running process_raw.R
+
 source("libraries.R")
 
 draw_histogram <- function(filename, which_LDH){
