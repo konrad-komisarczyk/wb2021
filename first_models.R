@@ -59,7 +59,7 @@ plot_feature_dependence(shaps, "hsCRP_last")
 
 
 # Same model with only 1 tree
-param <- list(objective = "reg:squarederror", max_depth = 6)
+param <- list(objective = "reg:squarederror", max_depth = 1)
 xgb_model_single_tree <- xgboost(data = as.matrix(x_train), 
                      label = y_train, 
                      params = param,
@@ -110,5 +110,47 @@ confusionMatrix <- caret::confusionMatrix(factor(preds), factor(y_test))
 confusionMatrix
 #Accuracy : 0.8135               
 #Sensitivity : 0.8450          
-#Specificity : 0.7500          
+#Specificity : 0.7500      
+
+
+
+# Performance at single dataset
+
+x_data1 <- data1[-(1:4)]
+y_data1 <- data1[[4]]
+
+x_data1 <- x_data1[test_indices[test_indices < nrow(data1)], ]
+y_data1 <- y_data1[test_indices[test_indices < nrow(data1)]]
+
+param <- list(objective = "reg:squarederror", max_depth = 6)
+xgb_model <- xgboost(data = as.matrix(x_train), 
+                     label = y_train, 
+                     params = param,
+                     nrounds = 200)
+
+preds <- ifelse(predict(xgb_model, as.matrix(x_data1)) > 0.5, 1, 0)
+confusionMatrix <- caret::confusionMatrix(factor(preds), factor(y_data1))
+confusionMatrix
+
+# Reference
+# Prediction   0  1
+#           0 15  7
+#           1  7  8
+
+# Accuracy : 0.6216          
+# 95% CI : (0.4476, 0.7754)
+# No Information Rate : 0.5946          
+# P-Value [Acc > NIR] : 0.4378          
+# 
+# Kappa : 0.2152          
+# 
+# Mcnemar's Test P-Value : 1.0000          
+#                                           
+#             Sensitivity : 0.6818          
+#             Specificity : 0.5333          
+#          Pos Pred Value : 0.6818          
+#          Neg Pred Value : 0.5333          
+#              Prevalence : 0.5946          
+#          Detection Rate : 0.4054          
+#    Detection Prevalence : 0.5946 
 
