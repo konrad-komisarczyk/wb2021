@@ -12,8 +12,8 @@ draw_freqpoly <- function(filename, which){
     x_min = -50
     x_max = 500
   } else {
-    x_min = 0
-    x_max= 100
+    x_min = -10
+    x_max= 110
   }
   bins = 20
   binsize = (x_max-x_min)/bins
