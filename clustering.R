@@ -92,6 +92,43 @@ ggplot(visualization_data_3, aes(x = lymphocytes_last, y = hsCRP_last, color = c
 ggplot(visualization_data_3, aes(x = lymphocytes_last, y = hsCRP_last, color = outcome)) +
   geom_point()
 
+# KMEANS TONGJI 300+cośtam
+data4b <- na.omit(data4)
+data4b <- data4b[c("LDH_last", "hsCRP_last", "lymphocytes_last")]
+
+clusters4 <- kmeans(data4b, 2)
+visualization_data_4 <- data4b %>% 
+  cbind(data.frame(cluster = clusters4$cluster, outcome = (na.omit(data4))$outcome + 1))
+
+write.csv(visualization_data_4, "kmeans_tongji375.csv")
+
+ggplot(visualization_data_4, aes(x = LDH_last, y = hsCRP_last, color = cluster)) +
+  geom_point()
+ggplot(visualization_data_4, aes(x = LDH_last, y = hsCRP_last, color = outcome)) +
+  geom_point()
+
+ggplot(visualization_data_4, aes(x = LDH_last, y = lymphocytes_last, color = cluster)) +
+  geom_point()
+ggplot(visualization_data_4, aes(x = LDH_last, y = lymphocytes_last, color = outcome)) +
+  geom_point()
+
+ggplot(visualization_data_4, aes(x = lymphocytes_last, y = hsCRP_last, color = cluster)) +
+  geom_point()
+ggplot(visualization_data_4, aes(x = lymphocytes_last, y = hsCRP_last, color = outcome)) +
+  geom_point()
+
+
+
+# *** TODO ***
+# CLUSTERYZACJA POZOSTAŁYCH PODZBIORÓW NA 2
+# * USUNIĘCIE OUTLIERÓW
+# * PORÓWNANIE WYNIKÓW METRYKAMI DLA KLASFIKACJI
+# * WIZUALIZACJA 3D
+
+# CLUSTERYZACJA POŁĄCZENIA ZBIORÓW NA 4 - wykrycie 
+
+
+
 
 
 
