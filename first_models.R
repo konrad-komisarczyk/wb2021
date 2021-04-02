@@ -19,7 +19,7 @@ data <- data1 %>%
   rbind(data4)
 
 colnames(data)
-DataExplorer::create_report(data)
+#DataExplorer::create_report(data)
 
 data <- data[-(1:3)]
 
