@@ -1,0 +1,20 @@
+---
+title: "WB Raport 2"
+output: pdf_document
+author:
+  - Konrad Komisarczyk
+  - Kacper Grzymkowski
+  - Jakub Fołtyn
+bibliography: citations.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Analiza
+see [@yan_interpretable_2020]
+
+## Różnice genetyczne
+
+# Modele
