@@ -75,7 +75,30 @@ process_outcomerea <- function(filename) {
     write.csv(file = str_c("data/", filename, ".csv"), row.names = F, quote = F)
 }
 
+process_northwell <- function(filename, outname="Northwell_US") {
+  read.csv(str_c("raw_data/", filename, ".csv") ) %>%
+    as_tibble() %>%
+    rename(
+      id = ClientVisitGUID,
+      LDH_first = First_LDH,
+      LDH_last = Last_LDH,
+      hsCRP_first = First_CRP,
+      hsCRP_last = Last_CRP,
+      lymphocytes_first = First_Lymph,
+      lymphocytes_last = Last_Lymph,
+      outcome = Expired_Outcome
+    ) %>%
+    mutate(
+      admission = NA,
+      discharge = NA
+    ) %>%
+    select(id, admission, discharge, outcome, 
+           LDH_first, LDH_last, hsCRP_first, hsCRP_last, lymphocytes_first, lymphocytes_last) %>%
+    write.csv(file = str_c("data/", outname, ".csv"), row.names = F, quote = F)
+}
+
 process_tongji("Tongji_375_CN")
 process_tongji("Tongji_110_CN")
 process_antonius("St_Antonius_NL")
 process_outcomerea("Outcomerea_FR")
+process_northwell("Yan_reply_First_last_wtime")
