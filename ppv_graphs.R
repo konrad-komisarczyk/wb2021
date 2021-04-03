@@ -44,6 +44,6 @@ recreate_ppv_hist <- function(dataset_name) {
     ylab('Precision/PPV for Death') +
     theme_bw() +
     theme(legend.justification=c(1,1), legend.title=element_blank(), legend.position=c(0.95,0.95), legend.spacing.y = unit(-0.15, "cm"))
-}
 
+}
 # recreate_ppv_hist("Tongji_375_CN") + recreate_ppv_hist("St_Antonius_NL")
