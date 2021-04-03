@@ -1,7 +1,6 @@
 # Requires running process_raw.R
 
 source("libraries.R")
-library(patchwork)
 
 draw_freqpoly <- function(filename, which){
   df = data.frame(read.csv(str_c("data/", filename, ".csv")))
