@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r load, include=FALSE}
 source("ppv_graphs.R")
-
+source("freqpoly.R")
 ```
 
 # Analysis
@@ -41,11 +41,12 @@ In cancer research, [@lv_prognostic_2019] have found a significant genetic diffe
 
 # EDA
 
+## Histograms and PPV
 We really liked the visualization from [@barish_external_2021] as it demonstrated the primary reason of the poor performance of the original model.
 However, the result wasn't compared to the Tongji data that Yan trained their models on. 
 We decided to compare the distributions of patients from two hospitals - Tongji, on which the original model was trained and St. Antonius, where the model was observed to have poor performance [@quanjel_replication_2021].
 
-```{r hist_ppv, message=FALSE, warning=FALSE, results='hide', fig.cap='Comparison of patient LDH distributions and positive predictive values for Tongji and St. Antonius hospitals.'}
+```{r hist_ppv, message=FALSE, warning=FALSE, fig.cap='Comparison of patient LDH distributions and positive predictive values for Tongji and St. Antonius hospitals.'}
 recreate_ppv_hist("Tongji_375_CN")
 recreate_ppv_hist("St_Antonius_NL")
 ```
@@ -53,7 +54,11 @@ These plots highlight the differences in distributions and the limited predictiv
 Particularly interesting is the large number of surviving, low LDH patients from Tongji data.
 Also of note is the difference in survival rates - Tongji had much lower survival rates compared to St. Antonius.
 
+```{r freq, message=FALSE, warning=FALSE}
+(draw_freqpoly("Tongji_375_CN", "hsCRP_last") + draw_freqpoly("Outcomerea_FR", "hsCRP_last")) /
+(draw_freqpoly("Tongji_110_CN", "hsCRP_last") + draw_freqpoly("St_Antonius_NL", "hsCRP_last"))
 
+```
 
 # New models
 text text text
