@@ -5,8 +5,6 @@
 
 # Requires running process_raw.R
 source("libraries.R")
-require(ggplot2)
-require(gridExtra)
 
 recreate_ppv_hist <- function(dataset_name) {
   df = data.frame(read.csv(paste0("data/", dataset_name,".csv")))
@@ -48,5 +46,4 @@ recreate_ppv_hist <- function(dataset_name) {
     theme(legend.justification=c(1,1), legend.title=element_blank(), legend.position=c(0.95,0.95), legend.spacing.y = unit(-0.15, "cm"))
 }
 
-library(patchwork)
-recreate_ppv_hist("Tongji_375_CN") + recreate_ppv_hist("St_Antonius_NL")
+# recreate_ppv_hist("Tongji_375_CN") + recreate_ppv_hist("St_Antonius_NL")
