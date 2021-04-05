@@ -1,6 +1,9 @@
 ---
 title: "WB Raport 2"
-output: pdf_document
+output: 
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
 author:
   - Konrad Komisarczyk
   - Kacper Grzymkowski
@@ -22,41 +25,48 @@ source("freqpoly.R")
 
 ## Genetic differences
 Several studies have considered Lactate Dehydrogenase as a possible prognostic tool. 
-In cancer research, [@lv_prognostic_2019] have found a significant genetic difference in LDH expression between Asian and Caucasian ethnicities.
+In cancer research, a meta-analysis has found a significant genetic difference in LDH expression between Asian and Caucasian ethnicities  [@lv_prognostic_2019].
+This might be one of the reasons for the model performing poorly. 
 
 ## Triage tool
-2.Przegięcie próbki i triaż po triażu, czyli no wiemy teraz że kowid nie zabija połowy osób których dotknie a wiele szpitali nie badało ludzi po odrzuceniu ich z intensywnej terapii, czyli narzędzie do triażu może nie być zbyt dobre po dokonaniu triażu wcześniej.
-
-
-## Hemolysis
-3.  Hemoliza, Yan et al twierdzą że ten szpital z którego mieli dane jest bardzo state of the art i że tam nie było hemolizy (która rozwala miary LDH). Teraz pytanie jak to wyglądało u reszty grup? Zwłaszcza że żadna z innych grup nie mówiła nic o metodologii badań laboratoryjnych.
+Another reason for the model's poor performance could be it's improper usage as a triage tool.
+In the Outcomerea dataset, the sample excluded the healthiest patients and the most severely ill patients, which will naturally lower the effectiveness of the model [@dupuis_limited_2021]. 
 
 ## Imbalanced tree model
-4.  Problem z modelem, że jest zbyt szybki do labelowania zgonów, i zbyt ufny pierwszemu badaniu LDH gdzie każda z grup zauważyła problemy z dużą ilością False Positive jak LDH \>=365
-
-## Model type
-5.  Rodzaj modelu, jak Barish etalle twierdzą że model czy ktoś umrze czy nie może być mało przydatny w zastosowaniach klinicznych, i lepszy byłby przewidujący czas do rozwiązania (?). see [@yan_interpretable_2020]
-
-
+A more technical explanation is the imbalanced decision tree being too trusting of LDH readings.
+Perhaps balancing the right side of the tree could help with creating a more robust model.
 
 # EDA
 
 ## Histograms and PPV
 We really liked the visualization from [@barish_external_2021] as it demonstrated the primary reason of the poor performance of the original model.
 However, the result wasn't compared to the Tongji data that Yan trained their models on. 
-We decided to compare the distributions of patients from two hospitals - Tongji, on which the original model was trained and St. Antonius, where the model was observed to have poor performance [@quanjel_replication_2021].
+We decided to compare the distributions of patients from the two hospitals - Tongji, on which the original model was trained and Northwell, where the model was observed to have poor performance.
+The data we were provided, doesn't seem to create a similar plot to the one in the article.
 
-```{r hist_ppv, message=FALSE, warning=FALSE, fig.cap='Comparison of patient LDH distributions and positive predictive values for Tongji and St. Antonius hospitals.'}
+```{r hist_ppv1, message=FALSE, warning=FALSE}
 recreate_ppv_hist("Tongji_375_CN")
-recreate_ppv_hist("St_Antonius_NL")
+recreate_ppv_hist("Northwell_US")
+
 ```
-These plots highlight the differences in distributions and the limited predictive ability of lactate dehydrogenase biomarker.
+**Comparison of patient LDH distributions and PPV for Tongji and Northwell hospitals.** \newpage
+```{r hist_ppv2, message=F, warning=F}
+recreate_ppv_hist("Outcomerea_FR")
+recreate_ppv_hist("St_Antonius_NL")
+
+```
+
+
+These plots highlight the differences in distributions and the limited predictive ability of lactate dehydrogenase biomarker in western hospitals.
 Particularly interesting is the large number of surviving, low LDH patients from Tongji data.
 Also of note is the difference in survival rates - Tongji had much lower survival rates compared to St. Antonius.
 
+
+
+
 ```{r freq, message=FALSE, warning=FALSE}
 (draw_freqpoly("Tongji_375_CN", "hsCRP_last") + draw_freqpoly("Outcomerea_FR", "hsCRP_last")) /
-(draw_freqpoly("Tongji_110_CN", "hsCRP_last") + draw_freqpoly("St_Antonius_NL", "hsCRP_last"))
+(draw_freqpoly("Northwell_US", "hsCRP_last") + draw_freqpoly("St_Antonius_NL", "hsCRP_last"))
 
 ```
 
