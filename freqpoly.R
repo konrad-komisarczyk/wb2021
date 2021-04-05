@@ -25,12 +25,12 @@ draw_freqpoly <- function(filename, which){
         outcome == 0 ~ "survived"
     )) %>% 
     ggplot() + 
-    geom_freqpoly(aes_string(x = which, color = "died"), binwidth=binsize, size=2, alpha=0.6) +
-    scale_color_manual(name='Outcome', labels=c("Died", "Survived"), values=c('blue', 'orange')) + 
+    geom_freqpoly(aes_string(x = which, color = "died"), binwidth=binsize, size=2, alpha=0.4) +
+    scale_color_manual(name='Outcome', labels=c("Died", "Survived"), values=c('orange', 'blue')) + 
     xlim(x_min, x_max) + 
     scale_y_continuous(name = "Number of patients") +
     ggtitle(title) +
-    theme_bw() 
+    theme_bw()
 }
 
 draw_freqpoly("Tongji_375_CN", "LDH_first")
