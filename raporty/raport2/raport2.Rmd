@@ -47,24 +47,26 @@ We have decided to take a closer look at patient data from 4 different sources, 
 We really liked the visualization from [@barish_external_2021] as it demonstrated the primary reason of the poor performance of the original model.
 The result wasn't compared to the Tongji data that Yan trained their models on. 
 We decided to compare the distributions of patients from the two hospitals - Tongji, on which the original model was trained and Northwell, where the model was observed to have poor performance, as well as Outcomerea and St. Antonius, to which we have access.
-However, the data we were provided doesn't recreate the figure in the article.
 
 ```{r hist_ppv1, message=FALSE, warning=FALSE, cache=T, dependson='load', fig.height=3.5}
 recreate_ppv_hist("Tongji_375_CN")
 recreate_ppv_hist("Northwell_US")
 
 ```
+
+The data we were provided doesn't recreate the figure in the article.
+We aren't sure why that is, but perhaps we misunderstood the figure presented.
 \newpage
-```{r hist_ppv2, message=F, warning=F, cache=T, dependson='load'}
+```{r hist_ppv2, message=F, warning=F, cache=T, dependson='load', fig.height=3.5}
 recreate_ppv_hist("Outcomerea_FR", scale_factor = 50)
 recreate_ppv_hist("St_Antonius_NL", scale_factor = 50)
 
 ```
-\newpage
-
 
 These plots highlight the differences in distributions and the limited predictive ability of lactate dehydrogenase biomarker in Outcomerea and St. Antonius datasets.
 Particularly interesting is the large number of surviving, low LDH patients from Tongji data.
+
+\newpage
 
 ### Frequency polygons 
 ```{r freq, message=FALSE, warning=FALSE, fig.height=8, fig.width=7}
@@ -80,16 +82,19 @@ draw_freqpoly("St_Antonius_NL", "hsCRP_last")
 We have used plotly as a tool to create easily explorable 3D scatter plots of the 3 common biomarkers present in all 3 datasets. 
 They are available in the code repository as .html files (plot with Northwell data has to be generated due to data availability issues). 
 To make the possible clusters more visible we have decided to transform all the features with a $\log(x) + 1$ transformation.
-```{r tongji_scatter, fig.height=3}
+```{r tongji_scatter}
 render_image <- function(prefix) {knitr::include_graphics(normalizePath(paste0("screenshots/", prefix, "_scatter.png")))}
 render_image("Tongji")
 ```
 Tongji data exhibits clear clustering behavior. 
 This behavior is not present in any other dataset.
+We decided to reuse this visualization and test our hypothesis of clustering in the Tongji dataset.
 
-```{r st_antonius_scatter, fig.height=3}
+```{r st_antonius_scatter}
 render_image("St_Antonius")
 ```
+
+\newpage
 
 # New models
 text text text
