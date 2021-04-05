@@ -6,7 +6,7 @@
 # Requires running process_raw.R
 source("libraries.R")
 
-recreate_ppv_hist <- function(dataset_name) {
+recreate_ppv_hist <- function(dataset_name, scale_factor = 100) {
   df = data.frame(read.csv(paste0("data/", dataset_name,".csv")))
 
   df['Died'] = df['outcome'] == 1
@@ -29,7 +29,7 @@ recreate_ppv_hist <- function(dataset_name) {
   threshold_data = data.frame(threshold_data)
   colnames(threshold_data) = c('LDH_last', 'PPV')
   
-  hist_scale_factor = 50
+  hist_scale_factor = scale_factor
   
   ggplot() + 
     geom_line(data=threshold_data, aes(x=LDH_last, y=PPV, color='Precision/PPV'), size=1.5) +
@@ -47,3 +47,5 @@ recreate_ppv_hist <- function(dataset_name) {
 
 }
 # recreate_ppv_hist("Tongji_375_CN") + recreate_ppv_hist("St_Antonius_NL")
+
+recreate_ppv_hist("Northwell_US")
