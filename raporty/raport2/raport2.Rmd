@@ -49,7 +49,7 @@ The result wasn't compared to the Tongji data that Yan trained their models on.
 We decided to compare the distributions of patients from the two hospitals - Tongji, on which the original model was trained and Northwell, where the model was observed to have poor performance, as well as Outcomerea and St. Antonius, to which we have access.
 However, the data we were provided doesn't recreate the figure in the article.
 
-```{r hist_ppv1, message=FALSE, warning=FALSE, cache=T, dependson='load'}
+```{r hist_ppv1, message=FALSE, warning=FALSE, cache=T, dependson='load', fig.height=3.5}
 recreate_ppv_hist("Tongji_375_CN")
 recreate_ppv_hist("Northwell_US")
 
@@ -67,17 +67,29 @@ These plots highlight the differences in distributions and the limited predictiv
 Particularly interesting is the large number of surviving, low LDH patients from Tongji data.
 
 ### Frequency polygons 
-```{r freq, message=FALSE, warning=FALSE}
+```{r freq, message=FALSE, warning=FALSE, fig.height=8, fig.width=7}
+draw_freqpoly("Tongji_375_CN", "hsCRP_last") /
 draw_freqpoly("Outcomerea_FR", "hsCRP_last") /
-draw_freqpoly("St_Antonius_NL", "hsCRP_last")
+draw_freqpoly("St_Antonius_NL", "hsCRP_last") 
 
 ```
 
+\newpage
 
 ## 3-dimensional scatter plots
-We have used plotly as a tool to create easily explorable 3D scatter plots of the 3 common biomarkers present in all 3 datasets. They are available in the code repository as .html files (plot with Northwell data has to be generated due to data availability issues).
+We have used plotly as a tool to create easily explorable 3D scatter plots of the 3 common biomarkers present in all 3 datasets. 
+They are available in the code repository as .html files (plot with Northwell data has to be generated due to data availability issues). 
+To make the possible clusters more visible we have decided to transform all the features with a $\log(x) + 1$ transformation.
+```{r tongji_scatter, fig.height=3}
+render_image <- function(prefix) {knitr::include_graphics(normalizePath(paste0("screenshots/", prefix, "_scatter.png")))}
+render_image("Tongji")
+```
+Tongji data exhibits clear clustering behavior. 
+This behavior is not present in any other dataset.
 
-
+```{r st_antonius_scatter, fig.height=3}
+render_image("St_Antonius")
+```
 
 # New models
 text text text
