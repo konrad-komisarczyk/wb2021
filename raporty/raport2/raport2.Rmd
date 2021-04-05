@@ -3,7 +3,6 @@ title: "WB Raport 2"
 output: 
   pdf_document:
     fig_caption: yes
-    keep_tex: yes
 author:
   - Konrad Komisarczyk
   - Kacper Grzymkowski
@@ -37,38 +36,48 @@ A more technical explanation is the imbalanced decision tree being too trusting 
 Perhaps balancing the right side of the tree could help with creating a more robust model.
 
 # EDA
+We have decided to take a closer look at patient data from 4 different sources, the original dataset on which the model was trained as well as the dataset from the 3 responses to the article:
+
+* Tongji hospital [@yan_interpretable_2020]
+* Outcomerea database [@dupuis_limited_2021]
+* St. Antonius hospital [@quanjel_replication_2021]
+* Northwell database [@barish_external_2021]
 
 ## Histograms and PPV
 We really liked the visualization from [@barish_external_2021] as it demonstrated the primary reason of the poor performance of the original model.
-However, the result wasn't compared to the Tongji data that Yan trained their models on. 
-We decided to compare the distributions of patients from the two hospitals - Tongji, on which the original model was trained and Northwell, where the model was observed to have poor performance.
-The data we were provided, doesn't seem to create a similar plot to the one in the article.
+The result wasn't compared to the Tongji data that Yan trained their models on. 
+We decided to compare the distributions of patients from the two hospitals - Tongji, on which the original model was trained and Northwell, where the model was observed to have poor performance, as well as Outcomerea and St. Antonius, to which we have access.
+However, the data we were provided doesn't recreate the figure in the article.
 
-```{r hist_ppv1, message=FALSE, warning=FALSE}
+```{r hist_ppv1, message=FALSE, warning=FALSE, cache=T, dependson='load'}
 recreate_ppv_hist("Tongji_375_CN")
 recreate_ppv_hist("Northwell_US")
 
 ```
-**Comparison of patient LDH distributions and PPV for Tongji and Northwell hospitals.** \newpage
-```{r hist_ppv2, message=F, warning=F}
-recreate_ppv_hist("Outcomerea_FR")
-recreate_ppv_hist("St_Antonius_NL")
+\newpage
+```{r hist_ppv2, message=F, warning=F, cache=T, dependson='load'}
+recreate_ppv_hist("Outcomerea_FR", scale_factor = 50)
+recreate_ppv_hist("St_Antonius_NL", scale_factor = 50)
 
 ```
+\newpage
 
 
-These plots highlight the differences in distributions and the limited predictive ability of lactate dehydrogenase biomarker in western hospitals.
+These plots highlight the differences in distributions and the limited predictive ability of lactate dehydrogenase biomarker in Outcomerea and St. Antonius datasets.
 Particularly interesting is the large number of surviving, low LDH patients from Tongji data.
-Also of note is the difference in survival rates - Tongji had much lower survival rates compared to St. Antonius.
 
-
-
-
+### Frequency polygons 
 ```{r freq, message=FALSE, warning=FALSE}
-(draw_freqpoly("Tongji_375_CN", "hsCRP_last") + draw_freqpoly("Outcomerea_FR", "hsCRP_last")) /
-(draw_freqpoly("Northwell_US", "hsCRP_last") + draw_freqpoly("St_Antonius_NL", "hsCRP_last"))
+draw_freqpoly("Outcomerea_FR", "hsCRP_last") /
+draw_freqpoly("St_Antonius_NL", "hsCRP_last")
 
 ```
+
+
+## 3-dimensional scatter plots
+We have used plotly as a tool to create easily explorable 3D scatter plots of the 3 common biomarkers present in all 3 datasets. They are available in the code repository as .html files (plot with Northwell data has to be generated due to data availability issues).
+
+
 
 # New models
 text text text
