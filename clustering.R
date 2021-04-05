@@ -95,7 +95,7 @@ ggplot(visualization_data_3, aes(x = lymphocytes_last, y = hsCRP_last, color = o
 # KMEANS TONGJI 300+cośtam
 data4b <- na.omit(data4)
 data4b <- data4b[c("LDH_last", "hsCRP_last", "lymphocytes_last")]
-data4b <- log(data4b)
+
 clusters4 <- kmeans(data4b, 2)
 visualization_data_4 <- data4b %>% 
   cbind(data.frame(cluster = clusters4$cluster, outcome = (na.omit(data4))$outcome + 1))
