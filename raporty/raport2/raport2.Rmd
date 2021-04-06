@@ -1,0 +1,119 @@
+---
+title: "WB Raport 2"
+output: 
+  pdf_document:
+    fig_caption: yes
+author:
+  - Konrad Komisarczyk
+  - Kacper Grzymkowski
+  - Jakub Fołtyn
+bibliography: citations.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r load, include=FALSE}
+source("ppv_graphs.R")
+source("freqpoly.R")
+```
+
+# Analysis
+After reading the responses to [@yan_interpretable_2020] we decided to look for reasons why the model doensn't work and maybe try to recalibrate the model to work on external data.
+We have however found that such a model must be significantly more complicated and less interpretable.
+
+## Genetic differences
+Several studies have considered Lactate Dehydrogenase as a possible prognostic tool. 
+In cancer research, a meta-analysis has found a significant genetic difference in LDH expression between Asian and Caucasian ethnicities  [@lv_prognostic_2019].
+Early COVID studies also have found significantly higher mortality rates than what was observed later in the pandemic. [@wu_clinical_2020] 
+This might be one of the reasons for the model performing poorly. 
+
+## Triage tool
+Another reason for the model's poor performance could be it's improper usage as a triage tool.
+In the Outcomerea dataset, the sample excluded the healthiest patients and the most severely ill patients, which will naturally lower the effectiveness of the model [@dupuis_limited_2021]. 
+
+## Imbalanced tree model
+A more technical explanation is the imbalanced decision tree being too trusting of LDH readings.
+Perhaps balancing the right side of the tree could help with creating a more robust model.
+
+# EDA
+We have decided to take a closer look at patient data from 4 different sources, the original dataset on which the model was trained as well as the dataset from the 3 responses to the article:
+
+* Tongji hospital [@yan_interpretable_2020]
+* Outcomerea database [@dupuis_limited_2021]
+* St. Antonius hospital [@quanjel_replication_2021]
+* Northwell database [@barish_external_2021]
+
+## Histograms and PPV
+We really liked the visualization from [@barish_external_2021] as it demonstrated the primary reason of the poor performance of the original model.
+The result wasn't compared to the Tongji data that Yan trained their models on. 
+We decided to compare the distributions of patients from the two hospitals - Tongji, on which the original model was trained and Northwell, where the model was observed to have poor performance, as well as Outcomerea and St. Antonius, to which we have access.
+
+```{r hist_ppv1, message=FALSE, warning=FALSE, fig.height=3.5}
+recreate_ppv_hist("Tongji_375_CN")
+recreate_ppv_hist("Northwell_US")
+
+```
+
+The data we were provided doesn't recreate the figure in the article.
+We aren't sure why that is. Perhaps we misunderstood the figure presented or we were given a smaller sample of the dataset.
+Whatever the reason, it's clear that the distributions are different. 
+Particularly interesting is the large number of surviving, low LDH patients from Tongji data.
+In the Northwell dataset, survivors are more spread out.
+This is the primary cause of the poor performance of the model and the reported high rate of False Positives.
+
+\newpage
+```{r hist_ppv2, message=F, warning=F, fig.height=3.5}
+recreate_ppv_hist("Outcomerea_FR", scale_factor = 50)
+recreate_ppv_hist("St_Antonius_NL", scale_factor = 50)
+
+```
+We also decided to look at the Outcomerea and St. Antonius data through the same lens.
+The small size of these datasets makes these plots difficult to interpret.
+Even so, these plots highlight the differences in distributions and the limited predictive ability of lactate dehydrogenase biomarker.
+One likely cause is the exclusion of worst outcome patients and best outcome patients.
+
+
+\newpage
+
+### Frequency polygons 
+```{r freq, message=FALSE, warning=FALSE, fig.height=8, fig.width=7}
+draw_freqpoly("Tongji_375_CN", "hsCRP_last") /
+draw_freqpoly("Outcomerea_FR", "hsCRP_last") /
+draw_freqpoly("St_Antonius_NL", "hsCRP_last") 
+
+```
+We also created density plots for other features, however the interpretation is similar to the LDH histograms.
+Tongji data when split by negative outcome has a "fat tail" that starts above a certain threshold.
+Data from other sources is more evenly distributed. 
+It may be possible to split the distributions using a simple decision rule, such a split might prove ineffective.
+
+\newpage
+
+## 3-dimensional scatter plots
+We have used plotly as a tool to create easily explorable 3D scatter plots of the 3 common biomarkers present in all 3 datasets. 
+They are available in the code repository as .html files (plot with Northwell data has to be generated due to data availability issues). 
+To make the possible clusters more visible we have decided to transform all the features with a $\log(x) + 1$ transformation.
+```{r tongji_scatter}
+render_image <- function(prefix) {knitr::include_graphics(normalizePath(paste0("screenshots/", prefix, "_scatter.png")))}
+render_image("Tongji")
+```
+Tongji data exhibits clear clustering behavior. 
+This behavior is not present in any other dataset.
+We decided to reuse this visualization when testing our hypothesis of clustering in the Tongji dataset.
+
+```{r st_antonius_scatter}
+render_image("St_Antonius")
+```
+
+\newpage
+
+# New models
+
+## Recalibrated XGBoost
+
+## Clustering Tongji
+
+# References

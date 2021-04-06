@@ -4,10 +4,9 @@
 # Nat Mach Intell 3, 25–27 (2021). https://doi.org/10.1038/s42256-020-00254-2
 
 # Requires running process_raw.R
-require(ggplot2)
-require(gridExtra)
+source("libraries.R")
 
-recreate_ppv_hist <- function(dataset_name) {
+recreate_ppv_hist <- function(dataset_name, scale_factor = 100) {
   df = data.frame(read.csv(paste0("data/", dataset_name,".csv")))
 
   df['Died'] = df['outcome'] == 1
@@ -30,7 +29,7 @@ recreate_ppv_hist <- function(dataset_name) {
   threshold_data = data.frame(threshold_data)
   colnames(threshold_data) = c('LDH_last', 'PPV')
   
-  hist_scale_factor = 50
+  hist_scale_factor = scale_factor
   
   ggplot() + 
     geom_line(data=threshold_data, aes(x=LDH_last, y=PPV, color='Precision/PPV'), size=1.5) +
@@ -45,7 +44,8 @@ recreate_ppv_hist <- function(dataset_name) {
     ylab('Precision/PPV for Death') +
     theme_bw() +
     theme(legend.justification=c(1,1), legend.title=element_blank(), legend.position=c(0.95,0.95), legend.spacing.y = unit(-0.15, "cm"))
-}
 
-library(patchwork)
-recreate_ppv_hist("Tongji_375_CN") + recreate_ppv_hist("St_Antonius_NL")
+}
+# recreate_ppv_hist("Tongji_375_CN") + recreate_ppv_hist("St_Antonius_NL")
+
+recreate_ppv_hist("Northwell_US")
