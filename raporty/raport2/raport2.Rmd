@@ -22,7 +22,7 @@ source("freqpoly.R")
 
 # Analysis
 After reading the responses to [@yan_interpretable_2020] we decided to look for reasons why the model doensn't work and maybe try to recalibrate the model to work on external data.
-We have however found that such a model must be significantly more complicated and less interpretable.
+We have however found that such a model would likely have to be significantly more complicated and less interpretable.
 
 ## Genetic differences
 Several studies have considered Lactate Dehydrogenase as a possible prognostic tool. 
