@@ -101,13 +101,20 @@ render_image <- function(prefix) {knitr::include_graphics(normalizePath(paste0("
 render_image("Tongji")
 ```
 Tongji data exhibits clear clustering behavior. 
-This behavior is not present in any other dataset.
+This behavior is not present to such a degree in any other dataset.
 We decided to reuse this visualization when testing our hypothesis of clustering in the Tongji dataset.
 
 ```{r st_antonius_scatter}
-render_image("St_Antonius")
+render_image("St_Antonius_small")
 ```
+St. Antonius dataset was particularly unclustered.
+Creating a decision boundary wouldn't be very simple.
 
+```{r northwell_scatter}
+render_image("Northwell_small")
+```
+Northwell dataset shows some clustering behavior. 
+Unlike the Tongji dataset, the boundary would have to go through the densest part of the plot.
 \newpage
 
 # New models
@@ -115,5 +122,12 @@ render_image("St_Antonius")
 ## Recalibrated XGBoost
 
 ## Clustering Tongji
+```{r tongji_cluster}
+render_image("Tongji_cluster")
+```
+We have ran a k-means algorithm on the original Tongji data. 
+The idea behind this experiment is to show that  even without labels the model can notice and create a decision boundary similar to the one in the article.
+This seems to be the case here, as there are no patients belonging to Cluster 2 who have also died and the majority of surviving patients belong to Cluster 2.
+This means that it shouldn't be surprising that models trained on this data perform well internally, but so poorly when validated with an external dataset.
 
 # References
