@@ -48,6 +48,17 @@ confusionMatrix
 #Sensitivity : 0.8527          
 #Specificity : 0.6875 
 
+# ggplot visualization
+ggplot(confusionMatrix$table %>% as_data_frame(), aes(x=Prediction, y=Reference)) +
+  geom_tile(aes(fill=n), alpha=0.6) +
+  geom_text(aes(label = sprintf("%d", n)), fontface  = "bold") +
+  ggtitle("Confusion matrix for the merged data xgboost model") +
+  scale_x_discrete(labels = c("Survived", "Died")) +
+  scale_y_discrete(labels = c("Survived", "Died")) +
+  scale_fill_brewer() +
+  theme_bw() +
+  theme(legend.position = "none")
+
 # Explaining the model
 unified <- xgboost.unify(xgb_model, x_train)
 shaps <- treeshap(unified, x_train)
