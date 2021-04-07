@@ -7,12 +7,13 @@ library(stringr)
 # Models
 library(xgboost)
 library(dbscan)
-library(DataExplorer)
 #devtools::install_github('ModelOriented/treeshap')
 library(treeshap)
 #library(caret)
 
 # EDA
+library(DataExplorer)
+
 library(patchwork)
 library(gridExtra)
 
