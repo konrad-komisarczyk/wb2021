@@ -97,7 +97,7 @@ We have used plotly as a tool to create easily explorable 3D scatter plots of th
 They are available in the code repository as .html files (plot with Northwell data has to be generated due to data availability issues). 
 To make the possible clusters more visible we have decided to transform all the features with a $\log(x) + 1$ transformation.
 ```{r tongji_scatter}
-render_image <- function(prefix) {knitr::include_graphics(normalizePath(paste0("screenshots/", prefix, "_scatter.png")))}
+render_image <- function(prefix, suf="_scatter.png") {knitr::include_graphics(normalizePath(paste0("screenshots/", prefix, suf)))}
 render_image("Tongji")
 ```
 Tongji data exhibits clear clustering behavior. 
@@ -120,6 +120,24 @@ Unlike the Tongji dataset, the boundary would have to go through the densest par
 # New models
 
 ## Recalibrated XGBoost
+We have trained a xgboost model on a combined data from Tongji, St. Antonius and Outcomerea.
+This model achieved the following metrics:
+```
+Accuracy : 0.7979
+Sensitivity : 0.8527          
+Specificity : 0.6875 
+```
+
+```{r merge_conf_mat}
+render_image("xgboost_merge_confmat.png", suf="")
+```
+
+
+```{r shap_importances}
+render_image("xgboost_shap.png", suf="")
+```
+As expected, first measurements weren't that important to the model and last measurements were better at predicting the outcome.
+LDH still seems to be the best predictor, which is also expected as our merged dataset contains Tongji data.
 
 ## Clustering Tongji
 ```{r tongji_cluster}
