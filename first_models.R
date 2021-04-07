@@ -55,7 +55,7 @@ ggplot(confusionMatrix$table %>% as_data_frame(), aes(x=Prediction, y=Reference)
   ggtitle("Confusion matrix for the merged data xgboost model") +
   scale_x_discrete(labels = c("Survived", "Died")) +
   scale_y_discrete(labels = c("Survived", "Died")) +
-  scale_fill_brewer() +
+  scale_fill_distiller() +
   theme_bw() +
   theme(legend.position = "none")
 
