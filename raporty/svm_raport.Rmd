@@ -6,4 +6,14 @@ As expected, SVM trained on the original Tongji hospital data has produced parti
 To compare, we also trained SVM on combined dataset, as well as on a dataset which excluded the Tongji hospital. The difference in shapes is best shown by ROC curves for data from Tongji hospital alone and for data excluding Tongji hospital.
 
 
+```{r combined_ROC}
+render_image("svm_combined_ROC.png", suf="")
+```
 
+```{r tongji_ROC}
+render_image("svm_tongji_ROC.png", suf="")
+```
+
+```{r svm_compare}
+render_image("svm_comparission.png", suf="")
+```
