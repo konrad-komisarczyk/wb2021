@@ -131,9 +131,14 @@ Unlike the Tongji dataset, the boundary would have to go through the densest par
 render_image("Tongji_cluster")
 ```
 We have ran a k-means algorithm on the original Tongji data. 
-The idea behind this experiment is to show that  even without labels the model can notice and create a decision boundary similar to the one in the article.
+The idea behind this experiment is to show that even without labels the model can notice and create a decision boundary similar to the one in the article.
 This seems to be the case here, as there are no patients belonging to Cluster 2 who have also died and the majority of surviving patients belong to Cluster 2.
 This means that it shouldn't be surprising that models trained on this data perform well internally, but so poorly when validated with an external dataset.
+
+
+We have ran a k-means algorithm also on all the other datasets but only for Tongji classes were visible as clusters. Removing outliers and transforming data did not improve the result.
+
+
 
 
 \newpage
