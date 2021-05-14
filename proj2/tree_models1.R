@@ -15,6 +15,9 @@ train_indices <- sample.int(n, size = 0.75 * n)
 exp_train <- d_exp[train_indices, ]
 exp_test <- d_exp[-train_indices, ]
 
+# write.csv(exp_train, "proj2/data/splitted/expired_train.csv")
+# write.csv(exp_test, "proj2/data/splitted/expired_test.csv")
+
 exp_train_x <- exp_train %>% 
   select(-death)
 exp_train_y <- exp_train %>% 
@@ -33,6 +36,10 @@ train_indices <- sample.int(n, size = 0.75 * n)
 
 icu_train <- d_icu[train_indices, ]
 icu_test <- d_icu[-train_indices, ]
+
+# write.csv(icu_train, "proj2/data/splitted/icu_train.csv")
+# write.csv(icu_test, "proj2/data/splitted/icu_test.csv")
+
 
 icu_train_x <- icu_train %>% 
   select(-ICU.or.not)
