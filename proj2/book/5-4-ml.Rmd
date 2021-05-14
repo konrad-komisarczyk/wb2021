@@ -14,6 +14,28 @@ The two architectures appear to be similar with regards to their effectiveness, 
 ### Introduction
 
 ### Methods
+3 neural network models and 1 xgboost model were trained for both ICU admission prediction and death prediction.
+The tested neural network architectures were: 
+replication of the architecture proposed by [@li_et_al_2020],
+modified version of that architecture using binary cross entropy as the loss function, 
+basic neural network model using two hidden layers of 32 neurons each with binary cross entropy as the loss function.
+Neural network models were created using Keras Python library.
+
+All models were trained and tested on data provided in the article [@li_et_al_2020].
+Feature selection was performed as described in the article.
+Data was split 0.1 test set size and 0.9 train set size.
+To reduce overfitting, an internal 0.2 validation set size was used.
+
+Effectiveness of those models were compared using receiver operating characteristic area under curve (ROC AUC) metric.
+ROC AUC values were calculated using the test data held out from training.
+
+Neural network models were trained 25 times each to compare stability.
+
+SHAP values were calculated for the xgboost models using ???.
+Approximate SHAP values were calculated for neural network models using DeepExplainer from the Python SHAP library.
+Feature importance was calculated using mean SHAP values and compared.
+
+
 
 ### Results
 
