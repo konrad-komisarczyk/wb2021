@@ -138,6 +138,7 @@ rf_tunes_icu %>%
 xgb_1 <- xgboost(data = as.matrix(exp_train_x), label = exp_train_y, 
                  params = list(max_depth = 5), nrounds = 5)
 
+# xgb.save(xgb_1, "proj2/models/xgb_expired.model")
 
 
 unified_1 <- xgboost.unify(xgb_1, exp_train_x)
@@ -207,7 +208,7 @@ confm
 xgb_4 <- xgboost(data = as.matrix(icu_train_x), label = icu_train_y, 
                  params = list(max_depth = 3), nrounds = 2)
 
-
+# xgb.save(xgb_4, "proj2/models/xgb_icu.model")
 
 unified_4 <- xgboost.unify(xgb_4, icu_train_x)
 shaps_4 <- treeshap(unified_4, icu_train_x)
