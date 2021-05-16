@@ -1,7 +1,11 @@
+
 ## Comparison of deep learning and tree-based models in the clinical prediction of the course of COVID-19 illness
 
 *Authors: Jakub Fołtyn, Kacper Grzymkowski, Konrad Komisarczyk*
-
+```{r,warning=FALSE,message=FALSE, echo = FALSE}
+library(knitr)  
+library(png)
+```
 
 ### Abstract
 
@@ -38,5 +42,18 @@ Feature importance was calculated using mean SHAP values and compared.
 
 
 ### Results
+ROC curve comparison between all ICU admission models is shown in Figure 1. XGBoost model was the best-performing model, based on the ROC AUC score. The best-performing neural network model was the *Basic* model (the neural network model with only 2 layers), with a ROC AUC score of 0.696. In the mortality prediction task, however, the *Basic* neural network model outperformed all other models, as shown in Figure 2. It is worth noting that in both cases the *Article* model, which was the replication of the [@li_et_al_2020] model had the lowest ROC AUC scored, and therefore is indicated to have performed the worst.
+TODO- dnn reproduction controversies, feature importance comparison
+
+
+```{r Figure 1, out.width="60%", fig.align='center', message=FALSE, echo = FALSE, fig.cap="**Figure 1:** ROC curves comparison for ICU admission prediction models. The dashed line indicates a random classifier (a model that classifies values in a random way). Each row in the legend contains model's line color,  name and ROC AUC score. Neural Networks model names explained: *Article* -  a replication of the model from *li_et_al_2020* article, *Basic* - basic model using two hidden layers of 32 neurons each with binary cross entropy as the loss function, *Modified* - modified version of the article model using binary cross entropy as the loss function."  }
+include_graphics(path = "figures/icu_comparison.png")
+```
+  
+
+
+```{r Figure_2, out.width="60%", message=FALSE, fig.align='center', echo = FALSE, fig.cap="**Figure 2:** ROC curves comparison for mortality prediction models. The dashed line indicates a random classifier (a model that classifies values in a random way). Each row in the legend contains model's line color, model's  and ROC AUC score. Neural Networks model names explained: *Article* -  a replication of the model from *li_et_al_2020* article, *Basic* - basic model using two hidden layers of 32 neurons each with binary cross entropy as the loss function, *Modified* - modified version of the article model using binary cross entropy as the loss function."}
+include_graphics(path = "figures/mortality_comparison.png")
+```
 
 ### Discussion
