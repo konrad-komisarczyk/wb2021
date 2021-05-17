@@ -53,3 +53,12 @@ include_graphics(path = "figures/mortality_comparison.png")
 ```
 
 ### Discussion
+The COVID-19 pandemic has demonstrated a need for quick development, testing, validation and deployment of machine learning models.
+However, this can't come at the expense of reproducibility, as the replication crisis still poses a serious issue.
+Our team has relatively little experience working with neural network models and it is possible that we misunderstood a part of the provided description.
+In the field of machine learning both data and source code are necessary components to reproduce results.
+This is even more important when proposing unusual model architectures, as those can lead to new discoveries in the field.
+However, when proposing such an architecture, a baseline model should be used to demonstrate that the proposed architecture can preform better.
+Finally, different external validation techniques should be used, such as a leave-one-hospital-out cross-validation or working on combined data from multiple sources.
+While our team focused primarily on comparing model architectures, other chapters in the WB Book examine those aspects of fair artificial intelligence.
+In conclusion, we have shown the importance of providing reproducible code, as well as having a baseline model to compare the results.
