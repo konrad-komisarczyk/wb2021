@@ -39,7 +39,7 @@ Feature importance was calculated using mean SHAP values and compared.
 
 ### Results
 ROC curve comparison between all ICU admission models is shown in Figure 1. XGBoost model was the best-performing model, based on the ROC AUC score. The best-performing neural network model was the *Basic* model (the neural network model with only 2 layers), with a ROC AUC score of 0.696. In the mortality prediction task, however, the *Basic* neural network model outperformed all other models, as shown in Figure 2. It is worth noting that in both cases the *Article* model, which was the replication of the [@li_et_al_2020] model had the lowest ROC AUC scored, and therefore is indicated to have performed the worst.
-TODO- dnn reproduction controversies, feature importance comparison
+
 
 
 ```{r Figure 1, out.width="60%", fig.align='center', message=FALSE, echo = FALSE, fig.cap="**Figure 1:** ROC curves comparison for ICU admission prediction models. The dashed line indicates a random classifier (a model that classifies values in a random way). Each row in the legend contains model's line color,  name and ROC AUC score. Neural Networks model names explained: *Article* -  a replication of the model from *li_et_al_2020* article, *Basic* - basic model using two hidden layers of 32 neurons each with binary cross entropy as the loss function, *Modified* - modified version of the article model using binary cross entropy as the loss function."  }
@@ -50,6 +50,17 @@ include_graphics(path = "figures/icu_comparison.png")
 
 ```{r Figure_2, out.width="60%", message=FALSE, fig.align='center', echo = FALSE, fig.cap="**Figure 2:** ROC curves comparison for mortality prediction models. The dashed line indicates a random classifier (a model that classifies values in a random way). Each row in the legend contains model's line color, model's  and ROC AUC score. Neural Networks model names explained: *Article* -  a replication of the model from *li_et_al_2020* article, *Basic* - basic model using two hidden layers of 32 neurons each with binary cross entropy as the loss function, *Modified* - modified version of the article model using binary cross entropy as the loss function."}
 include_graphics(path = "figures/mortality_comparison.png")
+```
+
+To ensure the reliability of Neural Network models, each model was trained and tested 25 times. The resulting boxplots can be seen in Figure 3 for ICU admission prediction data and in Figure 4 for mortality data. The comparison score for both cases was ROC AUC score. As we can see in Figure 3, the *Article* model trained on ICU admission data has proven to be especially unreliable, with AUC score ranging from 0.35 up to 0.7, while other 2 models outperformed it, with both better scores and lower variances.  Figure 4 shows that models trained and tested on mortality data had overall better ROC AUC scores then their ICU admission counterparts, but some outliers can be noticed for both *Article* and *Article(crossentropy)*, reaching as low as 0.5 ROC AUC score.
+TODO- dnn reproduction controversies, feature importance comparison  
+
+```{r Figure_3, out.width="60%", message=FALSE, fig.align='center', echo=FALSE, fig.cap="**Figure 3:**"}
+include_graphics(path = "figures/icu_nn.png")
+```
+
+```{r Figure_4, out.width="60%", message=FALSE, fig.align='center', echo=FALSE, fig.cap="**Figure 4:**"}
+include_graphics(path = "figures/mortality_nn.png")
 ```
 
 ### Discussion
