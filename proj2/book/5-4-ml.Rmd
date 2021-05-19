@@ -4,7 +4,6 @@
 *Authors: Jakub Fołtyn, Kacper Grzymkowski, Konrad Komisarczyk*
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(knitr)  
-#library(png)
 ```
 
 ### Abstract
@@ -17,8 +16,20 @@ The two architectures appear to be similar with regards to their effectiveness, 
 
 ### Introduction
 
+In 2020 many papers presenting models aimed to predict the course of COVID-19 in patients emerged [TUTAJ KILKA TAKICH PAPIERÓW] [https://www.cell.com/patterns/fulltext/S2666-3899(20)30120-3] [https://www.nature.com/articles/s42256-020-0180-7] [@yan_et_al_2020] []. Article we are referring to [@li_et_al_2020] differed from the majority with the use of neural networks. 
+
+In the past there were many attempts to compare effectiveness of artificial neural networks and tree-based models at various tasks using different types of data including tabular data [PREDICTING STUDENTS’ ACADEMIC PERFORMANCE: COMPARING ARTIFICIAL NEURAL NETWORK, DECISION TREE AND LINEAR REGRESSION] [https://www.sciencedirect.com/science/article/pii/S0378778816313937] and tasks connected to hospital patients outcomes [Comparison of Hospital Charge Prediction Models for Colorectal Cancer Patients: Neural Network vs. Decision Tree Models]. 
+There were analyses showing superiority of forests over simple neural networks on small (up to 1000 records) tabular datasets [https://arxiv.org/abs/1706.02515]. Data used by the referred article's authors consisted of 1020 or 1106 observations depending on the researched problem. 
+
+Authors note the importance of explainability of clinical models [http://proceedings.mlr.press/v106/tonekaboni19a.html] due to the need of establishing clinician's trust to successfully deploy a model. There are tools for explaining tree-based models [jakiś triplot?] [DALEX ??] and some of methods are not available for neural networks. Tools to calculate SHAP values for forest models were developed, while general algorithm to compute them exactly in a reasonable complexity for deep learning models, only approximations can be made [SHAP CYTOWANIE]. Explaining neural networks with SHAP values is an important issue in the field [https://openreview.net/forum?id=vsU0efpivw].
+
+The referred article does not provide a source code for the replication of the results. Taking care about the reproducibility is considered a major problem in the academic society [KSIĄŻKA WB Z TAMTEGO ROKU].
+
+Motivated by the preceding we aim to contribute to the work started by the authors of the referred article. At first, we try to replicate models. Then we propose different network architectures and XGBoost models. Finally, we compare the effectiveness of all the models at the prediction tasks and their explanations based on the SHAP values. 
+
+
 ### Methods
-3 neural network models and 1 xgboost model were trained for both ICU admission prediction and death prediction.
+3 neural network models and XGBoost model were trained for both ICU admission prediction and death prediction.
 The tested neural network architectures were: 
 
 * replication of the architecture proposed by [@li_et_al_2020] (referred to as the *Article* model),
