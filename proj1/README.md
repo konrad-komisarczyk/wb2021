@@ -20,7 +20,8 @@
 * `ppv_graphs.R` - recreate LDH/PPV histogram figure from the (Barish et al. 2020) article
 * `histograms.R` - create our version of the histogram
 * `freqpoly.R` - create density plots of the data
-* `models_*.R`, `xgboost_*.R` - various models
+* `models_*.R`, `xgboost_*.R` - various classification models
+* `clustering_*.R` - unsupervised approach to classifying the data
 * `3dtests.ipynb` - notebook containing plotly scripts for creating 3d plots
 * `SVM_test.ipynb` - notebook containing SVM models
 
