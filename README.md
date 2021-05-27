@@ -8,7 +8,7 @@
 
 ## Folder structure
 * `proj1/`
-  * Analysis of (Yan et al. 2020) article and responses to the article, with a focus on EDA and comparison to other datasets.
+  * Analysis of (Yan et al. 2020) article and responses to the article, with a focus on EDA, XGBoost modeling and comparison to other datasets.
 * `proj2/`
   * Things used when creating our WB-Book chapter.
   * Based on (Li et al. 2020) article, reproducing the architecture, proposing modifications and comparing it to XGBoost models.
